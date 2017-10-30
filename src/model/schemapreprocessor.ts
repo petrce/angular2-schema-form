@@ -21,6 +21,7 @@ export class SchemaPreprocessor {
     if (jsonSchema.type === 'object') {
       SchemaPreprocessor.checkProperties(jsonSchema, path);
       SchemaPreprocessor.checkAndCreateFieldsets(jsonSchema, path);
+      SchemaPreprocessor.normalizeRequired(jsonSchema);
     } else if (jsonSchema.type === 'array') {
       SchemaPreprocessor.checkItems(jsonSchema, path);
     }
@@ -36,12 +37,10 @@ export class SchemaPreprocessor {
   }
 
   private static checkAndCreateFieldsets(jsonSchema: any, path: string) {
-    if (jsonSchema.fieldsets === undefined) {
-      if (jsonSchema.order !== undefined) {
-        SchemaPreprocessor.replaceOrderByFieldsets(jsonSchema);
-      } else {
-        SchemaPreprocessor.createFieldsets(jsonSchema);
-      }
+    if (jsonSchema.order !== undefined) {
+      SchemaPreprocessor.replaceOrderByFieldsets(jsonSchema);
+    } else {
+      SchemaPreprocessor.createFieldsets(jsonSchema);
     }
     SchemaPreprocessor.checkFieldsUsage(jsonSchema, path);
   }
@@ -64,10 +63,10 @@ export class SchemaPreprocessor {
           schemaError(`${fieldId} is referenced by more than one fieldset: ${usedFields[fieldId]}`, path);
         }
         delete usedFields[fieldId];
-      } else if (jsonSchema.required.indexOf(fieldId) > -1) {
+      } else if (jsonSchema.required && jsonSchema.required.indexOf(fieldId) > -1) {
         schemaError(`${fieldId} is a required field but it is not referenced as part of a 'order' or a 'fieldset' property`, path);
       } else {
-        delete jsonSchema[fieldId];
+        delete jsonSchema.properties[fieldId];
         schemaWarning(`Removing unreferenced field ${fieldId}`, path);
       }
     }
@@ -80,18 +79,21 @@ export class SchemaPreprocessor {
   }
 
   private static createFieldsets(jsonSchema) {
-    jsonSchema.order = Object.keys(jsonSchema.properties);
+    jsonSchema.order = Object.keys(jsonSchema.properties).filter(x =>
+      !(jsonSchema.fieldsets) ||
+      jsonSchema.fieldsets.every(f => !(f.fields.includes(x)))
+    );
+
     SchemaPreprocessor.replaceOrderByFieldsets(jsonSchema);
   }
 
   private static replaceOrderByFieldsets(jsonSchema) {
-    jsonSchema.fieldsets = [{
+    jsonSchema.fieldsets = jsonSchema.fieldsets || [];
+    jsonSchema.fieldsets.unshift({
       id: 'fieldset-default',
-      title: jsonSchema.title || '',
-      description: jsonSchema.description || '',
-      name: jsonSchema.name || '',
+      title: jsonSchema.description || '',
       fields: jsonSchema.order
-    }];
+    });
     delete jsonSchema.order;
   }
 
@@ -103,6 +105,12 @@ export class SchemaPreprocessor {
       widget = {'id': widget};
     }
     fieldSchema.widget = widget;
+  }
+
+  private static normalizeRequired(jsonSchema) {
+    if (jsonSchema.type === 'object' && jsonSchema.required === undefined) {
+      jsonSchema.required = Object.keys(jsonSchema.properties).filter(key => !jsonSchema.properties[key].visibleIf);
+    }
   }
 
   private static checkItems(jsonSchema, path) {

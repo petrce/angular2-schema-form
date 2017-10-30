@@ -67,6 +67,7 @@ const moduleProviders = [
     FormComponent,
     WidgetChooserComponent,
     ArrayWidget,
+	ButtonWidget,	
     ObjectWidget,
     CheckboxWidget,
     FileWidget,
