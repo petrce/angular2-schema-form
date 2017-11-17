@@ -60,10 +60,14 @@ export class FormComponent implements OnChanges {
 
   @Output() onChange = new EventEmitter<{ value: any }>();
 
+  @Output() modelChanged = new EventEmitter<any>();
+
   @Output() isValid = new EventEmitter<boolean>();
 
   @Output() onErrorChange = new EventEmitter<{ value: any[] }>();
 
+  @Output() onErrorsChange = new EventEmitter<{value: any}>();
+  
   rootProperty: FormProperty = null;
 
   constructor(private formPropertyFactory: FormPropertyFactory,
@@ -92,7 +96,16 @@ export class FormComponent implements OnChanges {
       }
       SchemaPreprocessor.preprocess(this.schema);
       this.rootProperty = this.formPropertyFactory.createProperty(this.schema);
+
       this.rootProperty.valueChanges.subscribe(value => {
+        if(this.modelChanged.observers.length > 0) { // two way binding is used
+          if (this.model) {
+            Object.assign(this.model, value);
+          } else {
+            this.model = value;
+          }
+          this.modelChanged.emit(value);
+        }
         this.onChange.emit({value: value});
       });
       this.rootProperty.errorsChanges.subscribe(value => {
