@@ -1,3 +1,37 @@
+# 1.1.0 (2017-11-06)
+
+## New features
+
+- Added support for multiple select (Gavin Foley)
+- Angular5 and Typescript 2.4.2 support
+
+# 1.0.1 (2017-09-12)
+
+# Bug fixes
+
+- FileWidget: fix file encoding (ebrehault)
+
+# 1.0.0-beta.13 (2017-09-08)
+
+## New features
+
+- Expose form validity (thereiskeks)
+- Checkbox widget support for array properties (ebrehault)
+- Placeholder in textarea (ebrehault)
+- Fill in minLenght and maxLength attributes (ebrehault)
+- Compute unique error messages in widget (ebrehault)
+
+## Bug fixes
+
+- Make FileWidget properties accessible in derivated widget (ebrehault)
+- Do not repeat description in checkbox (ebrehault)
+
+# 1.0.0-beta.12 (2017-09-05)
+
+## New features
+
+- Manage input type="file" properly (ebrehault)
+
 # 1.0.0-beta.11 (2017-08-29)
 
 ## New features
