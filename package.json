@@ -16,7 +16,15 @@
 		"type": "git",
 		"url": "git+https://github.com/makinacorpus/angular2-schema-form"
 	},
-	"keywords": ["angularjs", "angular", "javascript", "angular2", "schema", "form", "schema form"],
+	"keywords": [
+		"angularjs",
+		"angular",
+		"javascript",
+		"angular2",
+		"schema",
+		"form",
+		"schema form"
+	],
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/makinacorpus/angular2-schema-form/issues"
