@@ -703,8 +703,8 @@ npm install -g @angular/cli
 cd ./tests
 npm install
 cd ./src/app
-ln -s ../../../src/ lib
-cd -
+mklink /d lib c:\<path-to>\angular2-schema-form\src\
+cd ../../
 ng serve
 ```
 
