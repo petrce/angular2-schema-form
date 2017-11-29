@@ -5,12 +5,12 @@
 	<div class="widget form-group">
 		<span *ngIf="schema.description" class="formHelp">{{ schema.description }}</span>
 
-		Selected value is: {{ value }}
 		<kendo-datepicker
 			[formControl]="control"
-			[disabled]="schema.readOnly"
 			[placeholder]="schema.placeholder"
 			[weekNumber]="schema.showWeekNumber || false"
+			[min]="minDate"
+			[max]="maxDate"
 			[attr.name]="name"
 			[attr.id]="id"
 			>
@@ -19,18 +19,11 @@
 			</ng-template>
 		</kendo-datepicker>
 
-		<!-- <input 
-			class="text-widget integer-widget form-control"
-			[attr.readonly]="schema.readOnly?true:null"
-			[name]="name"
-			[formControl]="control"
-			[attr.type]="'number'"
-			[attr.min]="schema.minimum"
-			[attr.max]="schema.maximum"
-			[attr.placeholder]="schema.placeholder"
-			[attr.maxLength]="schema.maxLength || null"
-			[attr.minLength]="schema.minLength || null"> -->
-
 		<input *ngIf="schema.readOnly" [attr.name]="name" type="hidden" [formControl]="control">
-			
+
+		<ul>
+			<li>Min = {{ minDate }}</li>
+			<li>Max = {{ maxDate }}</li>
+		</ul>
+
 	</div>

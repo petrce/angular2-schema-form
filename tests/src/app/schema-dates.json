@@ -11,14 +11,17 @@
 			"htmlClass": "mandatory",
 
 			"placeholder": "Select date...",
-			"showWeekNumber": true
+			"showWeekNumber": true,
+			"max": "toDateUtc"
 		},
 		"toDateUtc": {
 			"title": "End Date",
 			"type": "string",
 			"widget": "date",
 			"format": "date",
-			"htmlClass": "mandatory"
+			"htmlClass": "mandatory",
+
+			"min": "fromDateUtc"
 		}
 	}
 }
