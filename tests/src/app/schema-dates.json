@@ -6,14 +6,14 @@
 		"fromDateUtc": {
 			"title": "Start Date",
 			"type": "string",
-			"widget": "date-from",
+			"widget": "date",
 			"format": "date",
 			"htmlClass": "mandatory"
 		},
 		"toDateUtc": {
 			"title": "End Date",
 			"type": "string",
-			"widget": "date-to",
+			"widget": "date",
 			"format": "date",
 			"htmlClass": "mandatory"
 		}
