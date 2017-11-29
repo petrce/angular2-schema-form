@@ -7,8 +7,8 @@ export abstract class Widget<T extends FormProperty> {
 	control: FormControl;
 	errorMessages: string[];
 
-	id: string = '';
-	name: string = '';
+	id = '';
+	name = '';
 	schema: any = {};
 }
 

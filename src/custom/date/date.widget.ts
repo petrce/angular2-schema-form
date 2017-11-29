@@ -11,50 +11,75 @@ export class DateWidget extends ControlWidget implements AfterViewInit {
 	public minDate: Date = null;
 	public maxDate: Date = null;
 
+	public _minDateSchema: Date = null;
+	public _maxDateSchema: Date = null;
+
 	ngAfterViewInit() {
 		const control = this.control;
 
 		this.control.valueChanges.subscribe((newValue: Date) => {
-			console.log(`this.valueChanges() - ${newValue}`);
 			this.formProperty.setValue(this.dateAsString(newValue == null ? this.getDefaultValue() : newValue), false);
 		});
 
-		const targetPropertyMax = this.findTargetProperty(this.schema.max);
-		if (targetPropertyMax) {
-			targetPropertyMax.valueChanges.subscribe((newValue: string) => {
-				const newDate = this.parseDate(newValue);
+		if (this.schema.min) {
+			// try if 'schema.min' is Date
+			this.minDate = this.parseDate(this.schema.min);
 
-				console.log(`targetPropertyMax.valueChanges() - ${newValue}, ${newDate}`);
+			if (!this.minDate) {
+				// try if 'schema.min' is another property
+				const targetProperty = this.bindToTargetProperty(this.schema.min, (newValue: string) => {
+					const newDate = this.parseDate(newValue);
+					if (this.control.value && newDate != null && newDate > this.control.value) {
+						this.control.setValue(newDate);
+					}
+					this.minDate = newDate ? newDate : this._minDateSchema;
+				});
 
-				if (newDate != null && newDate < this.control.value) {
-					this.control.setValue(newDate);
+				// check if target points back to us and we have max date set as date, then set target max
+				if (targetProperty != null && targetProperty.schema.max === this.formProperty.path) {
+					this.minDate = this.parseDate(targetProperty.schema.min);
+					this._minDateSchema = new Date(this.minDate);
 				}
-
-				this.maxDate = newDate;
-				// this.formProperty.setValue(newValue.toISOString().substring(0, 10), false);
-			});
+			}
 		}
 
-		const targetPropertyMin = this.findTargetProperty(this.schema.min);
-		if (targetPropertyMin) {
-			targetPropertyMin.valueChanges.subscribe((newValue: string) => {
-				const newDate = this.parseDate(newValue);
+		if (this.schema.max) {
+			// try if 'schema.max' is Date
+			this.maxDate = this.parseDate(this.schema.max);
 
-				console.log(`targetPropertyMin.valueChanges() - ${newValue}, ${newDate}`);
+			if (!this.maxDate) {
+				// try if 'schema.max' is another property
+				const targetProperty = this.bindToTargetProperty(this.schema.max, (newValue: string) => {
+					const newDate = this.parseDate(newValue);
+					if (this.control.value && newDate != null && newDate < this.control.value) {
+						this.control.setValue(newDate);
+					}
+					this.maxDate = newDate ? newDate : this._maxDateSchema;
+				});
 
-				if (newDate != null && newDate > this.control.value) {
-					this.control.setValue(newDate);
+				// check if target points back to us and we have min date set as date, then set target min
+				if (targetProperty != null && targetProperty.schema.min === this.formProperty.path) {
+					this.maxDate = this.parseDate(targetProperty.schema.max);
+					this._maxDateSchema = new Date(this.maxDate);
 				}
-
-				this.minDate = newDate;
-				// this.formProperty.setValue(newValue.toISOString().substring(0, 10), false);
-			});
+			}
 		}
 	}
 
 	public getWeekNumber(context: any): number {
 		// TODO: `context.value` has Date object for which we can calculate custom week number.
 		return context.formattedValue;
+	}
+
+	private bindToTargetProperty(path: string, next: (value: any) => void): FormProperty {
+		const targetProperty = this.findTargetProperty(path);
+		if (!targetProperty) {
+			return null;
+		}
+
+		targetProperty.valueChanges.subscribe(next);
+
+		return targetProperty;
 	}
 
 	private findTargetProperty(path: string): FormProperty {
@@ -79,9 +104,14 @@ export class DateWidget extends ControlWidget implements AfterViewInit {
 	private parseDate(value: string, defaultValue: Date | null = null): Date {
 		let newDate: Date = defaultValue;
 		if (value != null) {
-			const date = Date.parse(value);
-			if (isFinite(date)) {
-				newDate = new Date(date);
+			if (value === '%TODAY%') {
+				newDate = new Date();
+				newDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate());
+			} else {
+				const date = Date.parse(value);
+				if (isFinite(date)) {
+					newDate = new Date(date);
+				}
 			}
 		}
 		return newDate;

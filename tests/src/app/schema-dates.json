@@ -10,9 +10,9 @@
 			"format": "date",
 			"htmlClass": "mandatory",
 
-			"placeholder": "Select date...",
 			"showWeekNumber": true,
-			"max": "toDateUtc"
+			"min": "%TODAY%",
+			"max": "/toDateUtc"
 		},
 		"toDateUtc": {
 			"title": "End Date",
@@ -21,7 +21,9 @@
 			"format": "date",
 			"htmlClass": "mandatory",
 
-			"min": "fromDateUtc"
+			"showWeekNumber": true,
+			"min": "/fromDateUtc",
+			"max": "%TODAY%"
 		}
 	}
 }
