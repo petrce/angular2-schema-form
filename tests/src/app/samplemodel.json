@@ -2,7 +2,7 @@
 	"firstName": "John",
 	"lastName": "Doe",
 	"categories": ["cat", "dog"],
-	"transactionNumber":123456,
+	"transactionNumber": 123456,
 	"favoriteColor": "#aaafff",
 	"transactionDescription": "Payment for your subscription",
 	"password": "admin",

@@ -3,11 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { SchemaFormModule } from './lib';
 import { AppComponent } from './app.component';
+import { DatesComponent } from './dates.component';
 
 @NgModule({
-	declarations: [AppComponent],
+	declarations: [AppComponent, DatesComponent],
 	imports: [BrowserModule, SchemaFormModule],
 	providers: [],
-	bootstrap: [AppComponent]
+	bootstrap: [DatesComponent]
 })
 export class AppModule {}

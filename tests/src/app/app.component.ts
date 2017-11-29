@@ -1,129 +1,116 @@
-import {
-  Component,
-  ViewEncapsulation
-} from '@angular/core';
-import {
-  WidgetRegistry,
-  Validator,
-  DefaultWidgetRegistry
-} from './lib';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { WidgetRegistry, Validator, DefaultWidgetRegistry } from './lib';
 
 @Component({
-  selector: 'sf-demo-app',
-  templateUrl: './app.component.html',
-  encapsulation: ViewEncapsulation.None,
-  providers: [{ provide: WidgetRegistry, useClass: DefaultWidgetRegistry }]
+	selector: 'sf-demo-app',
+	templateUrl: './app.component.html',
+	encapsulation: ViewEncapsulation.None,
+	providers: [{ provide: WidgetRegistry, useClass: DefaultWidgetRegistry }]
 })
 export class AppComponent {
+	schema: any;
+	model: any;
+	fieldValidators: { [fieldId: string]: Validator } = {};
+	actions = {};
 
-  schema: any;
-  model: any;
-  fieldValidators: { [fieldId: string]: Validator } = {};
-  actions = {};
+	constructor(registry: WidgetRegistry) {
+		this.schema = require('./sampleschema.json');
+		this.model = require('./samplemodel.json');
 
-  constructor(registry: WidgetRegistry) {
+		this.fieldValidators['/bornOn'] = (value, property, form) => {
+			let errors = null;
+			let dateArr = value.split('-');
 
-    this.schema = require('./sampleschema.json');
-    this.model = require('./samplemodel.json');
+			if (dateArr.length === 3) {
+				const now = new Date();
+				const min = new Date(now.getFullYear() - 100, now.getMonth(), now.getDay()).getTime();
+				const max = new Date().getTime();
+				const born = new Date(dateArr[0], dateArr[1] - 1, dateArr[2]).getTime();
 
-    this.fieldValidators['/bornOn'] = (value, property, form) => {
-      let errors = null;
-      let dateArr = value.split('-');
+				if (born < min || born > max) {
+					errors = [
+						{
+							bornOn: {
+								expectedValue: '>today - 100 && < today',
+								actualValue: value
+							}
+						}
+					];
+				}
+			}
+			return errors;
+		};
 
-      if (dateArr.length === 3) {
-        const now = new Date();
-        const min = new Date(
-          now.getFullYear() - 100,
-          now.getMonth(),
-          now.getDay()
-        ).getTime();
-        const max = new Date().getTime();
-        const born = new Date(
-          dateArr[0],
-          dateArr[1] - 1,
-          dateArr[2]
-        ).getTime();
+		this.fieldValidators['/promotion'] = (value, property, form) => {
+			if (value === 'student') {
+				let bornOn = form.getProperty('/bornOn');
 
-        if (born < min || born > max) {
-          errors = [{
-            bornOn: {
-              expectedValue: '>today - 100 && < today',
-              actualValue: value
-            }
-          }];
-        }
-      }
-      return errors;
-    };
+				if (bornOn.valid) {
+					let date = bornOn.value.split('-');
+					let validYear = new Date().getFullYear() - 17;
 
-    this.fieldValidators['/promotion'] = (value, property, form) => {
+					try {
+						const actualYear = parseInt(date[0], 10);
 
-      if (value === 'student') {
-        let bornOn = form.getProperty('/bornOn');
+						if (actualYear < validYear) {
+							return null;
+						}
 
-        if (bornOn.valid) {
-          let date = bornOn.value.split('-');
-          let validYear = new Date().getFullYear() - 17;
+						return [
+							{
+								promotion: {
+									bornOn: {
+										expectedValue: 'year<' + validYear,
+										actualValue: actualYear
+									}
+								}
+							}
+						];
+					} catch (e) {}
+				}
 
-          try {
-            const actualYear = parseInt(date[0], 10);
+				return [
+					{
+						promotion: {
+							bornOn: {
+								expectedFormat: 'date',
+								actualValue: bornOn.value
+							}
+						}
+					}
+				];
+			}
 
-            if (actualYear < validYear) {
-              return null;
-            }
+			return null;
+		};
 
-            return [{
-              promotion: {
-                bornOn: {
-                  expectedValue: 'year<' + validYear,
-                  actualValue: actualYear
-                }
-              }
-            }];
+		this.actions['alert'] = (property, options) => {
+			property.forEachChildRecursive(child => {
+				console.log(child.valid, child);
+			});
+			alert(JSON.stringify(property.value));
+		};
 
-          } catch (e) { }
-        }
+		this.actions['reset'] = (form, options) => {
+			form.reset();
+		};
+		this.actions['reset'] = (form, options) => {
+			form.reset();
+		};
+		this.actions['disable'] = this.disableAll.bind(this);
+	}
 
-        return [{
-          promotion: {
-            bornOn: {
-              expectedFormat: 'date',
-              actualValue: bornOn.value
-            }
-          }
-        }];
-      }
+	logErrors(errors) {
+		console.log('ERRORS', errors);
+	}
 
-      return null;
-    };
+	changeSchema() {
+		this.schema = require('./otherschema.json');
+	}
 
-    this.actions['alert'] = (property, options) => {
-      property.forEachChildRecursive(child => {
-        console.log(child.valid, child);
-      });
-      alert(JSON.stringify(property.value));
-    };
-
-    this.actions['reset'] = (form, options) => {
-      form.reset();
-    };
-    this.actions['reset'] = (form, options) => {
-      form.reset();
-    };
-    this.actions['disable'] = this.disableAll.bind(this);
-  }
-
-  logErrors(errors) {
-    console.log('ERRORS', errors);
-  }
-
-  changeSchema() {
-    this.schema = require('./otherschema.json');
-  }
-
-  disableAll() {
-    Object.keys(this.schema.properties).map(prop => {
-      this.schema.properties[prop].readOnly = true;
-    });
-  }
+	disableAll() {
+		Object.keys(this.schema.properties).map(prop => {
+			this.schema.properties[prop].readOnly = true;
+		});
+	}
 }
