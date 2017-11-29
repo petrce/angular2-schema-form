@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { SchemaFormModule } from './lib';
+
 import { AppComponent } from './app.component';
 import { DatesComponent } from './dates.component';
 

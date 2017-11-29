@@ -5,8 +5,14 @@
 	<div class="widget form-group">
 		<span *ngIf="schema.description" class="formHelp">{{ schema.description }}</span>
 
+		<div class="example-config">
+            Selected value is: {{ value }}
+        </div>
+        <div class="example-wrapper" style="min-height: 400px">
+            <p>Select a date:</p>
+            <kendo-datepicker [(value)]="value"></kendo-datepicker>
+        </div>
 
-		
 		<input 
 			class="text-widget integer-widget form-control"
 			[attr.readonly]="schema.readOnly?true:null"

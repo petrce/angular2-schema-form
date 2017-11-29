@@ -6,4 +6,6 @@ import { ControlWidget } from '../../widget';
 	selector: 'sf-date-widget',
 	templateUrl: './date.widget.html'
 })
-export class DateWidget extends ControlWidget {}
+export class DateWidget extends ControlWidget {
+	public value: Date = new Date(2000, 2, 10);
+}
