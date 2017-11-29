@@ -1,0 +1,21 @@
+{
+	"$schema": "http://json-schema.org/draft-04/hyper-schema#",
+	"type": "object",
+	"required": ["fromDateUtc", "toDateUtc"],
+	"properties": {
+		"fromDateUtc": {
+			"title": "Start Date",
+			"type": "string",
+			"widget": "date-from",
+			"format": "date",
+			"htmlClass": "mandatory"
+		},
+		"toDateUtc": {
+			"title": "End Date",
+			"type": "string",
+			"widget": "date-to",
+			"format": "date",
+			"htmlClass": "mandatory"
+		}
+	}
+}
