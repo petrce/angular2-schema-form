@@ -8,7 +8,10 @@
 			"type": "string",
 			"widget": "date",
 			"format": "date",
-			"htmlClass": "mandatory"
+			"htmlClass": "mandatory",
+
+			"placeholder": "Select date...",
+			"showWeekNumber": true
 		},
 		"toDateUtc": {
 			"title": "End Date",

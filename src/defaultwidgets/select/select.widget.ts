@@ -10,15 +10,15 @@ import { ControlWidget } from '../../widget';
 	</label>
 
 	<span *ngIf="schema.description" class="formHelp">
-		{{schema.description}}
+		{{ schema.description }}
 	</span>
 
 	<select *ngIf="schema.type!='array'" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly" class="form-control">
-		<option *ngFor="let option of schema.oneOf" [ngValue]="option.enum[0]" >{{option.description}}</option>
+		<option *ngFor="let option of schema.oneOf" [ngValue]="option.enum[0]" >{{ option.description }}</option>
 	</select>
 
 	<select *ngIf="schema.type==='array'" multiple [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly" class="form-control">
-		<option *ngFor="let option of schema.items.oneOf" [ngValue]="option.enum[0]" >{{option.description}}</option>
+		<option *ngFor="let option of schema.items.oneOf" [ngValue]="option.enum[0]">{{ option.description }}</option>
 	</select>
 
 	<input *ngIf="schema.readOnly" [attr.name]="name" type="hidden" [formControl]="control">

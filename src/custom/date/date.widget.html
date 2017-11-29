@@ -5,15 +5,21 @@
 	<div class="widget form-group">
 		<span *ngIf="schema.description" class="formHelp">{{ schema.description }}</span>
 
-		<div class="example-config">
-            Selected value is: {{ value }}
-        </div>
-        <div class="example-wrapper" style="min-height: 400px">
-            <p>Select a date:</p>
-            <kendo-datepicker [(value)]="value"></kendo-datepicker>
-        </div>
+		Selected value is: {{ value }}
+		<kendo-datepicker
+			[formControl]="control"
+			[disabled]="schema.readOnly"
+			[placeholder]="schema.placeholder"
+			[weekNumber]="schema.showWeekNumber || false"
+			[attr.name]="name"
+			[attr.id]="id"
+			>
+	        <ng-template kendoCalendarWeekNumberCellTemplate let-context="cellContext">
+				<span class="weeknumber-cell">{{ getWeekNumber(context) }}</span>
+			</ng-template>
+		</kendo-datepicker>
 
-		<input 
+		<!-- <input 
 			class="text-widget integer-widget form-control"
 			[attr.readonly]="schema.readOnly?true:null"
 			[name]="name"
@@ -23,5 +29,8 @@
 			[attr.max]="schema.maximum"
 			[attr.placeholder]="schema.placeholder"
 			[attr.maxLength]="schema.maxLength || null"
-			[attr.minLength]="schema.minLength || null">
+			[attr.minLength]="schema.minLength || null"> -->
+
+		<input *ngIf="schema.readOnly" [attr.name]="name" type="hidden" [formControl]="control">
+			
 	</div>
