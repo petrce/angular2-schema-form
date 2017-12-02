@@ -14,6 +14,9 @@
 			[attr.name]="name"
 			[attr.id]="id"
 			>
+			<ng-template kendoCalendarMonthCellTemplate let-date>
+				<span [class.k-state-selected]="isDateInRange(date)">{{ date.getDate() }}</span>
+			</ng-template>
 	        <ng-template kendoCalendarWeekNumberCellTemplate let-context="cellContext">
 				<span class="weeknumber-cell">{{ getWeekNumber(context) }}</span>
 			</ng-template>

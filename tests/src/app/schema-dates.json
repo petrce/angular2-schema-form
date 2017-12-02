@@ -23,7 +23,7 @@
 
 			"showWeekNumber": true,
 			"min": "/fromDateUtc",
-			"max": "%TODAY%"
+			"max": "2017-12-24"
 		}
 	}
 }

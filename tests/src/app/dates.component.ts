@@ -15,7 +15,10 @@ export class DatesComponent {
 
 	constructor(registry: WidgetRegistry) {
 		this.schema = require('./schema-dates.json');
-		this.model = {};
+		this.model = {
+			fromDateUtc: '2017-12-01',
+			toDateUtc: '2017-12-31'
+		};
 
 		this.fieldValidators['/bornOn'] = (value, property, form) => {
 			let errors = null;

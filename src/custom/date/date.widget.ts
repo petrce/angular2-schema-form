@@ -5,21 +5,23 @@ import { FormProperty } from '../../model/formproperty';
 
 @Component({
 	selector: 'sf-date-widget',
-	templateUrl: './date.widget.html'
+	templateUrl: './date.widget.html',
+	styleUrls: ['./date.widget.css']
 })
 export class DateWidget extends ControlWidget implements AfterViewInit {
+	public static readonly widgetId = 'date';
+
 	public minDate: Date = null;
 	public maxDate: Date = null;
 
-	public _minDateSchema: Date = null;
-	public _maxDateSchema: Date = null;
+	private _minDateSchema: Date = null;
+	private _maxDateSchema: Date = null;
+
+	private _minTargetProperty: any;
+	private _maxTargetProperty: any;
 
 	ngAfterViewInit() {
 		const control = this.control;
-
-		this.control.valueChanges.subscribe((newValue: Date) => {
-			this.formProperty.setValue(this.dateAsString(newValue == null ? this.getDefaultValue() : newValue), false);
-		});
 
 		if (this.schema.min) {
 			// try if 'schema.min' is Date
@@ -64,6 +66,41 @@ export class DateWidget extends ControlWidget implements AfterViewInit {
 				}
 			}
 		}
+
+		this.control.valueChanges.subscribe((newDate: Date) => {
+			if (newDate == null || ((this.minDate == null || newDate >= this.minDate) && (this.maxDate == null || newDate <= this.maxDate))) {
+				this.formProperty.setValue(this.dateAsString(newDate == null ? this.getDefaultValue() : newDate), false);
+			}
+		});
+
+		this.formProperty.valueChanges.subscribe((newValue: string) => {
+			const newDate = this.parseDate(newValue);
+			if (newDate == null || ((this.minDate == null || newDate > this.minDate) && (this.maxDate == null || newDate <= this.maxDate))) {
+				this.control.setValue(newDate, { emitEvent: false });
+			}
+
+			if (this._minTargetProperty === undefined) {
+				this._minTargetProperty = this.findTargetProperty(this.schema.min);
+			}
+			if (this._minTargetProperty != null && this._minTargetProperty.schema.max === this.formProperty.path) {
+				const d = this.parseDate(this._minTargetProperty.value);
+				if (this.minDate == null || this.minDate < d) {
+					this.minDate = d;
+					this._minDateSchema = new Date(this.minDate);
+				}
+			}
+
+			if (this._maxTargetProperty === undefined) {
+				this._maxTargetProperty = this.findTargetProperty(this.schema.max);
+			}
+			if (this._maxTargetProperty != null && this._maxTargetProperty.schema.min === this.formProperty.path) {
+				const d = this.parseDate(this._maxTargetProperty.value);
+				if (this.maxDate == null || this.maxDate > d) {
+					this.maxDate = d;
+					this._maxDateSchema = new Date(this.maxDate);
+				}
+			}
+		});
 	}
 
 	public getWeekNumber(context: any): number {
@@ -71,7 +108,23 @@ export class DateWidget extends ControlWidget implements AfterViewInit {
 		return context.formattedValue;
 	}
 
-	private bindToTargetProperty(path: string, next: (value: any) => void): FormProperty {
+	public isDateInRange(date: Date): boolean {
+		if (!(this.control.value || this.formProperty.value)) {
+			return false;
+		}
+
+		if (this._maxTargetProperty != null) {
+			return date >= this.parseDate(this.control.value || this.formProperty.value) && date <= this.parseDate(this._maxTargetProperty.value);
+		}
+
+		if (this._minTargetProperty != null) {
+			return date >= this.parseDate(this._minTargetProperty.value) && date <= this.parseDate(this.control.value || this.formProperty.value);
+		}
+
+		return false;
+	}
+
+	private bindToTargetProperty(path: string, next: (value: any) => void): any {
 		const targetProperty = this.findTargetProperty(path);
 		if (!targetProperty) {
 			return null;
@@ -82,7 +135,7 @@ export class DateWidget extends ControlWidget implements AfterViewInit {
 		return targetProperty;
 	}
 
-	private findTargetProperty(path: string): FormProperty {
+	private findTargetProperty(path: string): any {
 		if (path == null || path === this.formProperty.path) {
 			return null;
 		}
