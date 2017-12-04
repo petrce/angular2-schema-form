@@ -3,12 +3,17 @@
 	"type": "object",
 	"required": ["fromDateUtc", "toDateUtc"],
 	"properties": {
+		"dateCreatedUtc": {
+			"title": "Created Date",
+			"type": "string",
+			"widget": "date",
+			"format": "date"
+		},
 		"fromDateUtc": {
 			"title": "Start Date",
 			"type": "string",
 			"widget": "date",
 			"format": "date",
-			"htmlClass": "mandatory",
 
 			"showWeekNumber": true,
 			"min": "%TODAY%",
@@ -19,7 +24,6 @@
 			"type": "string",
 			"widget": "date",
 			"format": "date",
-			"htmlClass": "mandatory",
 
 			"showWeekNumber": true,
 			"min": "/fromDateUtc",

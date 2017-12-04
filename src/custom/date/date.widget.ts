@@ -157,13 +157,14 @@ export class DateWidget extends ControlWidget implements AfterViewInit {
 	private parseDate(value: string, defaultValue: Date | null = null): Date {
 		let newDate: Date = defaultValue;
 		if (value != null) {
+			// TODO: we cna have more placeholders, or use `moment()`
 			if (value === '%TODAY%') {
 				newDate = new Date();
 				newDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate());
 			} else {
-				const date = Date.parse(value);
-				if (isFinite(date)) {
-					newDate = new Date(date);
+				const dateAsNumber = Date.parse(value);
+				if (isFinite(dateAsNumber)) {
+					newDate = new Date(dateAsNumber);
 				}
 			}
 		}
