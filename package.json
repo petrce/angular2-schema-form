@@ -1,6 +1,6 @@
 {
 	"name": "eyc.control.ng-schema-form",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Based on https://github.com/makinacorpus/angular2-schema-form",
 	"main": "dist/index.js",
 	"typings": "dist/index.d.ts",
