@@ -9,7 +9,7 @@
 		"test": "cd tests/src/app && ln -s ../../../src/ ./lib && cd ../.. && ng test --single-run",
 		"build:aot": "ngc -p tsconfig.json",
 		"build:jit": "tsc -p tsconfig.json",
-		"build": "npm run clean && npm run build:aot && npm versipon patch && cpx package.json dist",
+		"build": "npm run clean && npm run build:aot && npm version patch && cpx package.json dist",
 		"install:peers": "install-self-peers"
 	},
 	"repository": {
