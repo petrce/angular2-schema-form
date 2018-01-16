@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { DatePickerModule } from '@progress/kendo-angular-dateinputs';
-
 import { FormElementComponent } from './formelement.component';
 import { FormComponent } from './form.component';
 import { WidgetChooserComponent } from './widgetchooser.component';
@@ -41,9 +39,6 @@ import { DefaultWidgetRegistry } from './defaultwidgets';
 import { SchemaValidatorFactory, ZSchemaValidatorFactory } from './schemavalidatorfactory';
 import { FormElementComponentAction } from './formelement.action.component';
 
-import { DateWidget } from './custom';
-const customWidgets = [DateWidget];
-
 const moduleProviders = [
 	{
 		provide: WidgetRegistry,
@@ -56,10 +51,10 @@ const moduleProviders = [
 ];
 
 @NgModule({
-	imports: [CommonModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, DatePickerModule],
-	declarations: [FormElementComponent, FormElementComponentAction, FormComponent, WidgetChooserComponent, DefaultWidget, ...defaultWidgets, ...customWidgets],
-	entryComponents: [FormElementComponent, FormElementComponentAction, FormComponent, WidgetChooserComponent, ...defaultWidgets, ...customWidgets],
-	exports: [FormComponent, FormElementComponent, FormElementComponentAction, WidgetChooserComponent, ...defaultWidgets, ...customWidgets]
+	imports: [CommonModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule],
+	declarations: [FormElementComponent, FormElementComponentAction, FormComponent, WidgetChooserComponent, DefaultWidget, ...defaultWidgets],
+	entryComponents: [FormElementComponent, FormElementComponentAction, FormComponent, WidgetChooserComponent, ...defaultWidgets],
+	exports: [FormComponent, FormElementComponent, FormElementComponentAction, WidgetChooserComponent, ...defaultWidgets]
 })
 export class SchemaFormModule {
 	static forRoot(providers?: [{ provide: any; useClass: any }]): ModuleWithProviders {

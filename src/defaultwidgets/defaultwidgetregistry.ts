@@ -10,8 +10,6 @@ import { StringWidget } from './string/string.widget';
 import { TextAreaWidget } from './textarea/textarea.widget';
 import { ButtonWidget } from './button/button.widget';
 
-import { DateWidget } from '../custom/date/date.widget';
-
 import { WidgetRegistry } from '../widgetregistry';
 
 export class DefaultWidgetRegistry extends WidgetRegistry {
@@ -45,8 +43,6 @@ export class DefaultWidgetRegistry extends WidgetRegistry {
 		this.register('checkbox', CheckboxWidget);
 
 		this.register('button', ButtonWidget);
-
-		this.register('date', DateWidget);
 
 		this.setDefaultWidget(StringWidget);
 	}
