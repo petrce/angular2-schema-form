@@ -9,7 +9,7 @@
 		"test": "cd tests/src/app && ln -s ../../../src/ ./lib && cd ../.. && ng test --single-run",
 		"build:aot": "ngc -p tsconfig.json",
 		"build:jit": "tsc -p tsconfig.json",
-		"build": "npm run clean && npm run build:aot",
+		"build": "npm run clean && npm run build:aot && npm versipon patch && cpx package.json dist",
 		"install:peers": "install-self-peers"
 	},
 	"repository": {
@@ -25,6 +25,7 @@
 	"license": "MIT",
 	"dependencies": {
 		"body-parser": "^1.15.1",
+		"cpx": "^1.5.0",
 		"methods": "^1.1.2",
 		"raw-loader": "0.5.1",
 		"z-schema": "^3.17.0"
