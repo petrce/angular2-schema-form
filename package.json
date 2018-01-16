@@ -25,7 +25,6 @@
 	"license": "MIT",
 	"dependencies": {
 		"body-parser": "^1.15.1",
-		"cpx": "^1.5.0",
 		"methods": "^1.1.2",
 		"raw-loader": "0.5.1",
 		"z-schema": "^3.17.0"
@@ -49,6 +48,7 @@
 		"@team-griffin/install-self-peers": "^1.1.1",
 		"@types/jasmine": "2.5.38",
 		"@types/node": "6.0.60",
+		"cpx": "^1.5.0",
 		"rimraf": "^2.5.4"
 	}
 }
