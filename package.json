@@ -23,13 +23,8 @@
 		"schema form"
 	],
 	"license": "MIT",
-	"dependencies": {
-		"body-parser": "^1.15.1",
-		"methods": "^1.1.2",
-		"raw-loader": "0.5.1",
-		"z-schema": "^3.17.0"
-	},
 	"peerDependencies": {
+		"@angular-devkit/core": "^0.0.28",
 		"@angular/animations": "^4.2.5",
 		"@angular/common": "^4.2.5",
 		"@angular/compiler": "^4.2.5",
@@ -43,7 +38,6 @@
 		"zone.js": "^0.8.4"
 	},
 	"devDependencies": {
-		"@angular-devkit/core": "^0.0.28",
 		"@angular/compiler-cli": "^4.2.5",
 		"@angular/platform-server": "^4.2.5",
 		"@team-griffin/install-self-peers": "^1.1.1",
