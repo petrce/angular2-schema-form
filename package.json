@@ -1,49 +1,48 @@
 {
-	"name": "eyc.control.ng-schema-form",
-	"version": "0.0.8",
-	"description": "Based on https://github.com/makinacorpus/angular2-schema-form",
-	"main": "dist/index.js",
-	"typings": "dist/index.d.ts",
-	"scripts": {
-		"clean": "rimraf dist/",
-		"test": "cd tests/src/app && ln -s ../../../src/ ./lib && cd ../.. && ng test --single-run",
-		"build:aot": "ngc -p tsconfig.json",
-		"build:jit": "tsc -p tsconfig.json",
-		"build": "npm run clean && npm run build:aot && npm version patch && cpx package.json dist",
-		"install:peers": "install-self-peers"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/petrce/angular2-schema-form.git"
-	},
-	"keywords": [
-		"angular",
-		"schema",
-		"form",
-		"schema form"
-	],
-	"license": "MIT",
-	"peerDependencies": {
-		"@angular-devkit/core": "^0.0.28",
-		"@angular/animations": "^4.2.5",
-		"@angular/common": "^4.2.5",
-		"@angular/compiler": "^4.2.5",
-		"@angular/core": "^4.2.5",
-		"@angular/forms": "^4.2.5",
-		"@angular/http": "^4.2.5",
-		"@angular/platform-browser": "^4.2.5",
-		"core-js": "2.4.1",
-		"rxjs": "5.5.2",
-		"typescript": "2.2.2",
-		"zone.js": "^0.8.4"
-	},
-	"devDependencies": {
-		"@angular/compiler-cli": "^4.2.5",
-		"@angular/platform-server": "^4.2.5",
-		"@team-griffin/install-self-peers": "^1.1.1",
-		"@types/jasmine": "2.5.38",
-		"@types/node": "6.0.60",
-		"cpx": "^1.5.0",
-		"rimraf": "^2.5.4"
-	}
+  "name": "eyc.control.ng-schema-form",
+  "version": "0.0.8",
+  "description": "Based on https://github.com/makinacorpus/angular2-schema-form",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rimraf dist/",
+    "test": "cd tests/src/app && ln -s ../../../src/ ./lib && cd ../.. && ng test --single-run",
+    "build:aot": "ngc -p tsconfig.json",
+    "build:jit": "tsc -p tsconfig.json",
+    "build": "npm run clean && npm run build:aot && npm version patch && cpx package.json dist",
+    "install:peers": "install-self-peers"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petrce/angular2-schema-form.git"
+  },
+  "keywords": ["angular", "schema", "form", "schema form"],
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular-devkit/core": "^0.0.28",
+    "@angular/animations": "^4.2.5",
+    "@angular/common": "^4.2.5",
+    "@angular/compiler": "^4.2.5",
+    "@angular/core": "^4.2.5",
+    "@angular/forms": "^4.2.5",
+    "@angular/http": "^4.2.5",
+    "@angular/platform-browser": "^4.2.5",
+    "core-js": "2.4.1",
+    "rxjs": "5.5.2",
+    "typescript": "2.2.2",
+    "zone.js": "^0.8.4",
+    "body-parser": "^1.15.1",
+    "methods": "^1.1.2",
+    "raw-loader": "0.5.1",
+    "z-schema": "^3.17.0"
+  },
+  "devDependencies": {
+    "@angular/compiler-cli": "^4.2.5",
+    "@angular/platform-server": "^4.2.5",
+    "@team-griffin/install-self-peers": "^1.1.1",
+    "@types/jasmine": "2.5.38",
+    "@types/node": "6.0.60",
+    "cpx": "^1.5.0",
+    "rimraf": "^2.5.4"
+  }
 }
