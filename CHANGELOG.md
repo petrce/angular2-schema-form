@@ -1,3 +1,23 @@
+# 1.2.1 (2018-01-16)
+
+# Bug fixes
+
+- Render array properly after deletion (Eric Brehault)
+- Fix AOT for Angular 5 (Andrea Accardo)
+
+
+# 1.2.0 (2018-01-01)
+
+## New features
+
+- Use angular-cli 1.5 for the test app (Sune Wøller)
+- Model two way binding (Robert Wurm)
+
+# Bug fixes
+
+- Avoid circular imports (Sune Wøller)
+- Fix SchemaValidatorFactory providing (Daniele Pecora)
+
 # 1.1.0 (2017-11-06)
 
 ## New features

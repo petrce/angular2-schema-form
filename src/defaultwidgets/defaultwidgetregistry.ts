@@ -1,4 +1,5 @@
 import { ArrayWidget } from './array/array.widget';
+import { ButtonWidget } from './button/button.widget';
 import { CheckboxWidget } from './checkbox/checkbox.widget';
 import { FileWidget } from './file/file.widget';
 import { IntegerWidget } from './integer/integer.widget';
@@ -8,7 +9,6 @@ import { RangeWidget } from './range/range.widget';
 import { SelectWidget } from './select/select.widget';
 import { StringWidget } from './string/string.widget';
 import { TextAreaWidget } from './textarea/textarea.widget';
-import { ButtonWidget } from './button/button.widget';
 
 import { WidgetRegistry } from '../widgetregistry';
 

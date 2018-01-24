@@ -6,7 +6,7 @@ import {
   WidgetRegistry,
   Validator,
   DefaultWidgetRegistry
-} from './lib';
+} from 'angular2-schema-form';
 
 @Component({
   selector: 'sf-demo-app',
@@ -18,6 +18,7 @@ export class AppComponent {
 
   schema: any;
   model: any;
+  value: any;
   fieldValidators: { [fieldId: string]: Validator } = {};
   actions = {};
 
@@ -125,5 +126,9 @@ export class AppComponent {
     Object.keys(this.schema.properties).map(prop => {
       this.schema.properties[prop].readOnly = true;
     });
+  }
+
+  setValue(value) {
+    this.value = value;
   }
 }
