@@ -28,3 +28,4 @@ release/
 /tests/typings
 /tests/e2e/*.js
 /tests/e2e/*.map
+/.vs/*
