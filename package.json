@@ -43,13 +43,13 @@
     "typescript": "2.3.4",
     "zone.js": "^0.8.4"
   },
-  "devDependencies": {
-    "@angular/compiler-cli": "^5.2.1",
-    "@angular/platform-server": "^5.2.1",
-    "@team-griffin/install-self-peers": "^1.1.1",
-    "@types/jasmine": "2.8.4",
-    "@types/node": "9.3.0",
-    "cpx": "^1.5.0",
-    "rimraf": "^2.5.4"
-  }
+	"devDependencies": {
+		"@angular/compiler-cli": "^5.2.1",
+		"@angular/platform-server": "^5.2.1",
+		"@team-griffin/install-self-peers": "^1.1.1",
+		"@types/jasmine": "2.5.38",
+		"@types/node": "9.3.0",
+		"cpx": "^1.5.0",
+		"rimraf": "^2.5.4"
+	}
 }
