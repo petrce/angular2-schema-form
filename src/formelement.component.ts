@@ -1,36 +1,22 @@
-import {
-  Component,
-  Input,
-  OnInit
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
-import {
-  FormControl
-} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 import { Widget } from './widget';
 
-import {
-  ActionRegistry,
-  FormProperty
-} from './model';
+import { ActionRegistry, FormProperty } from './model';
 
 @Component({
   selector: 'sf-form-element',
-  template: `<div *ngIf="formProperty.visible"
-    [class.has-error]="!control.valid"
-	  [class.has-success]="control.valid">
-	<sf-widget-chooser
-	(widgetInstanciated)="onWidgetInstanciated($event)"
-	[widgetInfo]="formProperty.schema.widget">
-	</sf-widget-chooser>
+  template: `
+<ng-container *ngIf="formProperty.visible">
+	<sf-widget-chooser (widgetInstanciated)="onWidgetInstanciated($event)" [widgetInfo]="formProperty.schema.widget"></sf-widget-chooser>
   <div *ngIf="buttons" [ngClass]="buttons[0]?.groupHtmlClass">
 	  <sf-form-element-action *ngFor="let button of buttons" [button]="button" [formProperty]="formProperty"></sf-form-element-action>
   </div>
-</div>`
+</ng-container>`,
 })
 export class FormElementComponent implements OnInit {
-
   private static counter = 0;
 
   @Input() formProperty: FormProperty;
@@ -39,7 +25,6 @@ export class FormElementComponent implements OnInit {
   widget: Widget<any> = null;
 
   buttons = [];
-
 
   constructor(private actionRegistry: ActionRegistry) {}
 
@@ -58,7 +43,7 @@ export class FormElementComponent implements OnInit {
   }
 
   private createButtonCallback(button) {
-    button.action = (e) => {
+    button.action = e => {
       let action;
       if (button.id && (action = this.actionRegistry.get(button.id))) {
         if (action) {
@@ -71,7 +56,7 @@ export class FormElementComponent implements OnInit {
 
   onWidgetInstanciated(widget: Widget<any>) {
     this.widget = widget;
-    let id = 'field' + (FormElementComponent.counter++);
+    let id = 'field' + FormElementComponent.counter++;
 
     this.widget.formProperty = this.formProperty;
     this.widget.schema = this.formProperty.schema;
@@ -79,5 +64,4 @@ export class FormElementComponent implements OnInit {
     this.widget.id = id;
     this.widget.control = this.control;
   }
-
 }
