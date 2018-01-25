@@ -12,11 +12,17 @@
       "node_modules/@types"
     ],
     "paths": {
-      "angular2-schema-form": ["lib/angular2-schema-form"]
+      "eyc.control.ng-schema-form": ["src/app/lib/eyc.control.ng-schema-form/index.ts"]
     },
     "lib": [
       "es2016",
       "dom"
     ]
-  }
+  },
+  "angularCompilerOptions": {
+		"paths": {
+			"eyc.control.ng-schema-form": ["src/app/lib/eyc.control.ng-schema-form/index.ts"]
+		}
+	},
+
 }

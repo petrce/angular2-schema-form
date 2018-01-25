@@ -6,7 +6,7 @@ import {
   WidgetRegistry,
   Validator,
   DefaultWidgetRegistry
-} from 'angular2-schema-form';
+} from 'eyc.control.ng-schema-form';
 
 @Component({
   selector: 'sf-demo-app',
