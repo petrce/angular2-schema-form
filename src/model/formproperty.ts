@@ -20,6 +20,8 @@ export abstract class FormProperty {
   private _root: PropertyGroup;
   private _parent: PropertyGroup;
   private _path: string;
+  private _propertyId: string;
+  private _metadata: any;
 
   constructor(
     schemaValidatorFactory: SchemaValidatorFactory,
@@ -37,6 +39,9 @@ export abstract class FormProperty {
       this._root = <PropertyGroup>(<any>this);
     }
     this._path = path;
+
+    const subPathIdx = path.indexOf('/');
+    this._propertyId = subPathIdx !== -1 ? this._path.substr(0, subPathIdx) : this._path;
   }
 
   public get valueChanges() {
@@ -73,6 +78,36 @@ export abstract class FormProperty {
 
   public get valid() {
     return this._errors === null;
+  }
+
+  public get propertyId(): string {
+    return this._propertyId;
+  }
+
+  public get metadata(): any {
+    if (this._metadata != null) {
+      return this._metadata;
+    }
+
+    if (!this._parent) {
+      const fieldsets = this.root.schema.fieldsets;
+      if (!fieldsets) {
+        return undefined;
+      }
+
+      let metadata = fieldsets.map((x: any) => x.fieldProperties).filter((x: any) => x != null);
+
+      if (metadata.length) {
+        metadata = metadata.reduce((acc: any, arr: any) => Object.assign(acc, arr));
+      }
+
+      this._metadata = metadata;
+    } else {
+      const rootMeta = this.root.metadata;
+      this._metadata = rootMeta[this.propertyId] != null ? rootMeta[this.propertyId] : {};
+    }
+
+    return this.metadata;
   }
 
   public abstract setValue(value: any, onlySelf: boolean);
@@ -215,35 +250,7 @@ export abstract class FormProperty {
 }
 
 export abstract class PropertyGroup extends FormProperty {
-  private _metadata: any;
-
   public properties: FormProperty[] | { [key: string]: FormProperty } = null;
-
-  public get metadata(): any {
-    if (this._metadata != null) {
-      return this._metadata;
-    }
-
-    if (this.isRoot) {
-      const fieldsets = this.root.schema.fieldsets;
-      if (!fieldsets) {
-        return undefined;
-      }
-
-      let metadata = fieldsets.map((x: any) => x.fieldProperties).filter((x: any) => x != null);
-
-      if (metadata.length) {
-        metadata = metadata.reduce((acc: any, arr: any) => Object.assign(acc, arr));
-      }
-
-      this._metadata = metadata;
-    } else {
-      const rootMeta = this.root.metadata;
-      this._metadata = rootMeta[this.path] != null ? rootMeta[this.path] : {};
-    }
-
-    return this.metadata;
-  }
 
   public getProperty(path: string) {
     const subPathIdx = path.indexOf('/');
