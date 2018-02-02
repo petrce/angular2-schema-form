@@ -11,8 +11,8 @@ import { ValidatorRegistry } from './validatorregistry';
 export abstract class FormProperty {
   public schemaValidator: Function;
 
-  private _value: any = null;
-  private _errors: any = null;
+  protected _value: any = null;
+  protected _errors: any = null;
   private _valueChanges = new BehaviorSubject<any>(null);
   private _errorsChanges = new BehaviorSubject<any>(null);
   private _visible = true;
