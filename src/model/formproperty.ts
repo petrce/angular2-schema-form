@@ -39,9 +39,7 @@ export abstract class FormProperty {
       this._root = <PropertyGroup>(<any>this);
     }
     this._path = path;
-
-    const subPathIdx = path.indexOf('/');
-    this._propertyId = subPathIdx !== -1 ? this._path.substr(0, subPathIdx) : this._path;
+    this._propertyId = this._path.substr(this._path.lastIndexOf('/') + 1);
   }
 
   public get valueChanges() {
