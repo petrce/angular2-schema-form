@@ -1,13 +1,13 @@
-import {NgModule, ModuleWithProviders} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   FormsModule,
   ReactiveFormsModule
 } from '@angular/forms';
 
-import {FormElementComponent} from './formelement.component';
-import {FormComponent} from './form.component';
-import {WidgetChooserComponent} from './widgetchooser.component';
+import { FormElementComponent } from './formelement.component';
+import { FormComponent } from './form.component';
+import { WidgetChooserComponent } from './widgetchooser.component';
 import {
   ArrayWidget,
   ButtonWidget,
@@ -25,10 +25,10 @@ import {
   DefaultWidget
 } from './default.widget';
 
-import {WidgetRegistry} from './widgetregistry';
-import {DefaultWidgetRegistry} from './defaultwidgets';
-import {SchemaValidatorFactory, ZSchemaValidatorFactory} from './schemavalidatorfactory';
-import {FormElementComponentAction} from "./formelement.action.component";
+import { WidgetRegistry } from './widgetregistry';
+import { DefaultWidgetRegistry } from './defaultwidgets';
+import { SchemaValidatorFactory, ZSchemaValidatorFactory } from './schemavalidatorfactory';
+import { FormElementComponentAction } from "./formelement.action.component";
 
 const moduleProviders = [
   {
@@ -67,7 +67,7 @@ const moduleProviders = [
     FormComponent,
     WidgetChooserComponent,
     ArrayWidget,
-    ButtonWidget,    ObjectWidget,
+    ButtonWidget, ObjectWidget,
     CheckboxWidget,
     FileWidget,
     IntegerWidget,
