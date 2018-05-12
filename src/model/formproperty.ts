@@ -1,13 +1,7 @@
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import 'rxjs/add/observable/combineLatest';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/distinctUntilChanged';
-
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 import { SchemaValidatorFactory } from '../schemavalidatorfactory';
 import { ValidatorRegistry } from './validatorregistry';
-
 export abstract class FormProperty {
   public schemaValidator: Function;
 
@@ -220,15 +214,15 @@ export abstract class FormProperty {
         if (visibleIf.hasOwnProperty(dependencyPath)) {
           const property = this.searchProperty(dependencyPath);
           if (property) {
-            const valueCheck = property.valueChanges.map(value => {
+            const valueCheck = property.valueChanges.pipe(map(value => {
               if (visibleIf[dependencyPath].indexOf('$ANY$') !== -1) {
                 return value.length > 0;
               } else {
                 return visibleIf[dependencyPath].indexOf(value) !== -1;
               }
-            });
+            }));
             const visibilityCheck = property._visibilityChanges;
-            const and = Observable.combineLatest([valueCheck, visibilityCheck], (v1, v2) => v1 && v2);
+            const and = combineLatest([valueCheck, visibilityCheck], (v1, v2) => v1 && v2);
             propertiesBinding.push(and);
           } else {
             console.warn("Can't find property " + dependencyPath + ' for visibility check of ' + this.path);
@@ -236,10 +230,9 @@ export abstract class FormProperty {
         }
       }
 
-      Observable.combineLatest(propertiesBinding, (...values: boolean[]) => {
+      combineLatest(propertiesBinding, (...values: boolean[]) => {
         return values.indexOf(true) !== -1;
-      })
-        .distinctUntilChanged()
+      }).pipe(distinctUntilChanged())
         .subscribe(visible => {
           this.setVisible(visible);
         });
