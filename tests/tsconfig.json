@@ -14,7 +14,8 @@
     ],
     "paths": {
       "eyc.control.ng-schema-form": [
-        "src/app/lib/index.ts"
+        // "src/app/lib-src/index.ts",
+        "src/app/lib-dist",
       ]
     },
     "lib": [
@@ -25,7 +26,8 @@
   "angularCompilerOptions": {
     "paths": {
       "eyc.control.ng-schema-form": [
-        "src/app/lib/index.ts"
+        // "src/app/lib-src/index.ts",
+        "src/app/lib-dist",
       ]
     }
   },
