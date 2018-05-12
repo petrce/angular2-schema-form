@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -12,17 +13,20 @@
       "node_modules/@types"
     ],
     "paths": {
-      "eyc.control.ng-schema-form": ["src/app/lib/eyc.control.ng-schema-form/index.ts"]
+      "eyc.control.ng-schema-form": [
+        "src/app/lib/index.ts"
+      ]
     },
     "lib": [
-      "es2016",
+      "es2017",
       "dom"
     ]
   },
   "angularCompilerOptions": {
-		"paths": {
-			"eyc.control.ng-schema-form": ["src/app/lib/eyc.control.ng-schema-form/index.ts"]
-		}
-	},
-
+    "paths": {
+      "eyc.control.ng-schema-form": [
+        "src/app/lib/index.ts"
+      ]
+    }
+  },
 }
