@@ -29,3 +29,5 @@ release/
 /tests/e2e/*.js
 /tests/e2e/*.map
 /.vs/*
+/tests/src/app/lib-dist
+/tests/src/app/lib-src
