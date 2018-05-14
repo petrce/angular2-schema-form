@@ -1,13 +1,7 @@
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
-import 'rxjs/add/observable/combineLatest';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/distinctUntilChanged';
-
 import { SchemaValidatorFactory } from '../schemavalidatorfactory';
 import { ValidatorRegistry } from './validatorregistry';
-
 export abstract class FormProperty {
   public schemaValidator: Function;
 

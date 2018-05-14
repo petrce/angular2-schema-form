@@ -1,12 +1,7 @@
 {
   "name": "eyc.control.ng-schema-form",
-  <<
-  << << < HEAD "version": "1.0.2",
-  ===
-  === =
-  "version": "1.0.1",
-  >>>
-  >>> > ng6update "description": "Based on https://github.com/makinacorpus/angular2-schema-form",
+  "version": "1.0.2",
+  "description": "Based on https://github.com/makinacorpus/angular2-schema-form",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
@@ -35,11 +30,13 @@
   "license": "MIT",
   "dependencies": {
     "@angular-devkit/core": "0.6.1",
-    "@angular/compiler": "6.0.1",
+    "@angular/compiler": "^6.0.1",
     "body-parser": "1.18.2",
     "methods": "1.1.2",
     "raw-loader": "0.5.1",
     "rxjs": "6.1.0",
+    "rxjs-compat": "6.1.0",
+    "typescript": "^2.7.2",
     "z-schema": "3.20.0"
   },
   "peerDependencies": {
@@ -55,11 +52,10 @@
     "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "6.0.1",
+    "@angular/compiler-cli": "^6.0.1",
     "@angular/platform-server": "6.0.1",
     "@team-griffin/install-self-peers": "1.1.1",
     "@types/jasmine": "2.8.7",
-    "@types/node": "10.0.8",
-    "typescript": "2.7.2"
+    "@types/node": "10.0.8"
   }
 }

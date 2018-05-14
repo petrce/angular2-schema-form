@@ -12,9 +12,7 @@ export class ZSchemaValidatorFactory extends SchemaValidatorFactory {
 
   constructor() {
     super();
-    this.zschema = new ZSchema({
-        breakOnFirstError: false
-    });
+    this.zschema = new ZSchema({});
   }
 
   createValidatorFn(schema: any) {
