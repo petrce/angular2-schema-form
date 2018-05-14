@@ -1,14 +1,10 @@
-import { TestsPage } from './app.po';
+import { AppPage } from './app.po';
 
 describe('tests App', () => {
-  let page: TestsPage;
+	let page: AppPage;
 
-  beforeEach(() => {
-    page = new TestsPage();
-  });
+	beforeEach(() => {
+		page = new AppPage();
+	});
 
-  it('should display message saying app works', () => {
-    page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
-  });
 });
