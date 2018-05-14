@@ -1,12 +1,12 @@
-import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import {SchemaValidatorFactory} from '../schemavalidatorfactory';
-import {ValidatorRegistry} from './validatorregistry';
+import { SchemaValidatorFactory } from '../schemavalidatorfactory';
+import { ValidatorRegistry } from './validatorregistry';
 
 export abstract class FormProperty {
   public schemaValidator: Function;
@@ -22,10 +22,10 @@ export abstract class FormProperty {
   private _path: string;
 
   constructor(schemaValidatorFactory: SchemaValidatorFactory,
-              private validatorRegistry: ValidatorRegistry,
-              public schema: any,
-              parent: PropertyGroup,
-              path: string) {
+    private validatorRegistry: ValidatorRegistry,
+    public schema: any,
+    parent: PropertyGroup,
+    path: string) {
     this.schemaValidator = schemaValidatorFactory.createValidatorFn(this.schema);
 
     this._parent = parent;
@@ -187,7 +187,7 @@ export abstract class FormProperty {
         if (visibleIf.hasOwnProperty(dependencyPath)) {
           let property = this.searchProperty(dependencyPath);
           if (property) {
-            let valueCheck = property.valueChanges.map(
+            let valueCheck = property.valueChanges.pipe(map(
               value => {
                 if (visibleIf[dependencyPath].indexOf('$ANY$') !== -1) {
                   return value.length > 0;
@@ -195,9 +195,9 @@ export abstract class FormProperty {
                   return visibleIf[dependencyPath].indexOf(value) !== -1;
                 }
               }
-            );
+            ));
             let visibilityCheck = property._visibilityChanges;
-            let and = Observable.combineLatest([valueCheck, visibilityCheck], (v1, v2) => v1 && v2);
+            let and = combineLatest([valueCheck, visibilityCheck], (v1, v2) => v1 && v2);
             propertiesBinding.push(and);
           } else {
             console.warn('Can\'t find property ' + dependencyPath + ' for visibility check of ' + this.path);
@@ -205,9 +205,9 @@ export abstract class FormProperty {
         }
       }
 
-      Observable.combineLatest(propertiesBinding, (...values: boolean[]) => {
+      combineLatest(propertiesBinding, (...values: boolean[]) => {
         return values.indexOf(true) !== -1;
-      }).distinctUntilChanged().subscribe((visible) => {
+      }).pipe(distinctUntilChanged()).subscribe((visible) => {
         this.setVisible(visible);
       });
     }
